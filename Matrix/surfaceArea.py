@@ -7,25 +7,22 @@ class Solution:
         for i in range(n):
             for j in range(n):
                 if grid[i][j] > 0:
-                    counter += 2
-                if i == 0:
-                    counter += grid[i][j]
-                elif grid[i][j] - grid[i-1][j] > 0:
-                    counter += grid[i][j] - grid[i-1][j]
-                if i == n - 1:
-                    counter += grid[i][j]
-                elif grid[i][j] - grid[i+1][j] > 0:
-                    counter += grid[i][j] - grid[i+1][j]
-                
+                    counter += 1
+        counter *= 2
 
-                if j == 0:
-                    counter += grid[i][j]
-                elif grid[i][j] - grid[i][j-1] > 0:
-                    counter += grid[i][j] - grid[i][j-1]
-                if j == m - 1:
-                    counter += grid[i][j]
-                elif grid[i][j] - grid[i][j+1] > 0:
-                    counter += grid[i][j] - grid[i][j+1]
-                
+        row_sum = 0
+        for i in range(n):
+            tmp = grid[i][-1] + grid[i][0]
 
-        return counter
+            for j in range(1, n):
+                tmp += abs(grid[i][j-1] - grid[i][j])
+            row_sum += tmp
+
+        col_sum = 0
+        for j in range(n):
+            tmp = grid[-1][j] + grid[0][j]
+            for i in range(1, n):
+                tmp += abs(grid[i-1][j] - grid[i][j])
+            col_sum += tmp
+
+        return counter + col_sum + row_sum
